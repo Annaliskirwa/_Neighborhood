@@ -91,3 +91,21 @@ def leave_hood(request,id):
     request.user.profile.neighbourhood = None
     request.user.profile.save()
     return redirect('hoods')
+
+
+# Add a business view
+@login_required(login_url='login')
+def new_business(request,id):
+    hood = NeighbourHood.objects.get(id=id)
+    title = 'Add here your business'
+    if request.method=='POST':
+        bus_form = BusinessForm(request.POST,request.FILES)
+        if bus_form.is_valid():
+            business = bus_form.save(commit=False)
+            business.neighbourhood = hood
+            business.owner = request.user.profile
+            business.save()
+            return redirect('my_hood', id)
+    else:
+        bus_form = BusinessForm()
+    return render(request,'all-neighbour/business.html',{'bus_form':bus_form,'title':title})
