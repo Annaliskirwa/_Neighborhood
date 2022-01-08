@@ -37,3 +37,14 @@ class NeighbourHood(models.Model):
     @classmethod
     def find_neighborhood(cls, neighborhood_id):
         return cls.objects.filter(id=neighborhood_id)
+
+
+# The profile model
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
+    bio = models.TextField(max_length=400, blank=True)
+    name = models.CharField(blank=True, max_length=120)
+    profile_pic = models.ImageField(upload_to='images/',default='v1639327874/images/default_drurzc.jpg')
+    phone_number = PhoneField(max_length=15, blank=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='members', blank=True)
+    
