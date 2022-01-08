@@ -24,8 +24,24 @@ class HoodForm(forms.ModelForm):
 
 # Update user form
 class UpdateUserForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    email = forms.EmailField(max_length=254, help_text='Enter a valid email address.')
 
     class Meta:
         model = User
         fields = ('username', 'email')
+
+# Update user profile form
+class UpdateUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'neighbourhood','profile_pic', 'bio', 'phone_number']
+        
+        widgets = {
+            'bio': Textarea(attrs={'cols': 20, 'rows': 5}),
+        }
+
+# Business form
+class BusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ('owner', 'neighbourhood')
