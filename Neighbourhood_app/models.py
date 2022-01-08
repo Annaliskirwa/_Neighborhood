@@ -77,4 +77,14 @@ class Post(models.Model):
     
     def delete_post(self):
         self.delete()
+
+# The business model
+class Business(models.Model):
+    business_name = models.CharField(max_length=120)
+    email = models.EmailField(max_length=254)
+    description = models.TextField(blank=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='business')
+    business_photo = models.ImageField(upload_to='images/')
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
+    phone_number = PhoneField(null=True, blank=True)
     
