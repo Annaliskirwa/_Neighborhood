@@ -27,3 +27,6 @@ class NeighbourHood(models.Model):
 
     def delete_neighborhood(self):
         self.delete()
+
+    def update_neighborhood(self):
+        self.update()
