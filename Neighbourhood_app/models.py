@@ -34,4 +34,6 @@ class NeighbourHood(models.Model):
     def update_occupants(self):
         self.update()
 
-    
+    @classmethod
+    def find_neighborhood(cls, neighborhood_id):
+        return cls.objects.filter(id=neighborhood_id)
