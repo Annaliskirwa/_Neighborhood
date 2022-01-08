@@ -82,4 +82,12 @@ def user_hood(request,id):
     request.user.profile.save()
     
     return render(request, 'all-neighbour/user_hood.html', {'hood': hood,'businesses':businesses,'posts':posts,'current_user':current_user, 'members':members})
-    
+
+
+# Leave hood view
+@login_required(login_url='login')
+def leave_hood(request,id):
+    hood = NeighbourHood.objects.get(id=id)
+    request.user.profile.neighbourhood = None
+    request.user.profile.save()
+    return redirect('hoods')
