@@ -142,3 +142,18 @@ def update_business(request,id,bus_id):
     else:
         bus_form = BusinessForm(instance=instance)
     return render(request,'all-neighbour/business.html',{'bus_form':bus_form,'title':title})
+
+# Update post view
+@login_required(login_url='login')
+def update_post(request,id,post_id):
+    title = 'Update here your post'
+    instance= Post.objects.get(id=post_id)
+    if request.method=='POST':
+        post_form = PostForm(request.POST,instance=instance)
+        if post_form.is_valid():
+           post_form.save()
+        return redirect('my_hood', id)
+    else:
+        post_form = PostForm(instance=instance)
+    return render(request,'all-neighbour/post.html',{'post_form':post_form,'title':title})
+
