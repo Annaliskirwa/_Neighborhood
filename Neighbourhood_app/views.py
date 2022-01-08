@@ -55,3 +55,17 @@ def profile(request, username):
         profile_form = UpdateUserProfileForm(instance=request.user.profile)
 
     return render(request, 'all-neighbour/profile.html', {'user_form':user_form,'profile_form':profile_form})
+
+# New hood view
+@login_required(login_url='login')
+def new_hood(request):
+    if request.method == 'POST':
+        form = HoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.admin = request.user
+            hood.save()
+            return HttpResponseRedirect(reverse("hoods"))
+    else:
+        form = HoodForm()
+    return render(request, 'all-neighbour/newhood.html', {'form': form})
