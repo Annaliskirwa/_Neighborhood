@@ -48,3 +48,10 @@ class Profile(models.Model):
     phone_number = PhoneField(max_length=15, blank=True)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.SET_NULL, null=True, related_name='members', blank=True)
     
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
