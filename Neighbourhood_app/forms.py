@@ -11,7 +11,7 @@ class UserRegisterForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields= ['Username','Email','Password1','Password2']
+        fields= ['username','email','password1','password2']
         
 User._meta.get_field('email')._unique=True
 
@@ -28,13 +28,13 @@ class UpdateUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('Username', 'Email')
+        fields = ('username', 'email')
 
 # Update user profile form
 class UpdateUserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['Name', 'Neighbourhood','Profile_picture', 'Biography', 'Phone_number']
+        fields = ['name', 'neighbourhood','profile_pic', 'bio', 'phone_number']
         
         widgets = {
             'bio': Textarea(attrs={'cols': 20, 'rows': 5}),
@@ -44,10 +44,10 @@ class UpdateUserProfileForm(forms.ModelForm):
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        exclude = ('Business owner', 'Neighbourhood')
+        exclude = ('owner', 'neighbourhood')
 
 # Post form
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['Title', 'Post']
+        fields = ['title', 'post']

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from django.contrib import messages
-from .forms import UpdateUserForm, UpdateUserProfileForm, UserRegisterForm,HoodForm,BusinessForm,PostForm
+from . forms import UpdateUserForm, UpdateUserProfileForm, UserRegisterForm,HoodForm,BusinessForm,PostForm
 from .models import NeighbourHood,Business,Post,Profile
 
 
