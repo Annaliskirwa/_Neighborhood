@@ -15,3 +15,12 @@ class NeighbourHood(models.Model):
     health_tell = PhoneField(null=True, blank=True)
     police_number = PhoneField(null=True, blank=True)
     area_administrator = models.CharField(max_length=100,null=True)
+
+    class Meta:
+        ordering = ['-pk']
+
+    def __str__(self):
+        return f'{self.name} hood'
+
+    def create_neighborhood(self):
+        self.save()
