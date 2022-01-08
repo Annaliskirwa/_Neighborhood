@@ -11,4 +11,7 @@ urlpatterns=[
     path('leave-hood/<id>', views.leave_hood, name='leave_hood'),
     path('update_hood/<id>/', views.update_hood, name='update_hood'),
     path('search/', views.search_hood, name='search'),
+    path('newbusiness/<id>/', views.new_business, name='newbusiness'),
+    path('update_business/<id>/<bus_id>/business/', views.update_business, name='update_business'),
+    path('delete_business/<id>/<bus_id>/', views.delete_business, name='delete_business'),
 ]
