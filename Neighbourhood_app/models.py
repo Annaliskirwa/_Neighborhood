@@ -87,4 +87,13 @@ class Business(models.Model):
     business_photo = models.ImageField(upload_to='images/')
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
     phone_number = PhoneField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-pk']
+
+    def __str__(self):
+        return f'{self.business_name} Biashara'
+
+    def create_business(self):
+        self.save()
     
