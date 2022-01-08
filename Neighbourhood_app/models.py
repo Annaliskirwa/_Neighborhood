@@ -30,3 +30,8 @@ class NeighbourHood(models.Model):
 
     def update_neighborhood(self):
         self.update()
+
+    def update_occupants(self):
+        self.update()
+
+    
