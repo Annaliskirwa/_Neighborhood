@@ -68,4 +68,13 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_owner')
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='hood_post')
+
+    class Meta:
+        ordering = ['-pk']
+        
+    def __str__(self):
+        return f'{self.title} Post'
+    
+    def delete_post(self):
+        self.delete()
     
