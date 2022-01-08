@@ -177,5 +177,13 @@ def update_hood(request,id):
 def delete_business(request,id,bus_id):
     business= Business.objects.get(id=bus_id)
     business.delete_business()
-    messages.info(request, ('Business Deleted'))
+    messages.info(request, ('Your business has been deleted'))
+    return redirect('my_hood', id)
+
+# Deleting a post view
+@login_required(login_url='login')
+def delete_post(request,id,post_id):
+    post= Post.objects.get(id=post_id)
+    post.delete_post()
+    messages.info(request, ('Your post has been deleted'))
     return redirect('my_hood', id)
