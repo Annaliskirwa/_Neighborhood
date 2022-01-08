@@ -99,3 +99,7 @@ class Business(models.Model):
     
     def delete_business(self):
         self.delete()
+
+    @classmethod
+    def search_business(cls, name):
+        return cls.objects.filter(name__icontains=name).all()
