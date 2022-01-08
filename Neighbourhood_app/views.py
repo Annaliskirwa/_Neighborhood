@@ -30,6 +30,16 @@ def register(request):
         form = UserRegisterForm()
     return render(request,"registration/register.html",{'form':form})
 
+# User profile view
+def user_profile(request, username):
+    current_user=request.user       
+    user_poster = get_object_or_404(User, username=username)
+    
+    if request.user == user_poster:
+        return redirect('profile', username=request.user.username)
+      
+    return render(request, 'all-neighbour/member.html', {'user_poster': user_poster, 'current_user':current_user})
+    
 
 # Hoods view
 @login_required(login_url='login')
