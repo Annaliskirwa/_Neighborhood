@@ -157,3 +157,17 @@ def update_post(request,id,post_id):
         post_form = PostForm(instance=instance)
     return render(request,'all-neighbour/post.html',{'post_form':post_form,'title':title})
 
+# Update hood view
+@login_required(login_url='login')
+def update_hood(request,id):
+    title = 'Update here your hood'
+    instance= NeighbourHood.objects.get(id=id)
+    if request.method=='POST':
+        form = HoodForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+           form.save()
+        messages.success(request, ('Your hood has been succesfully updated'))
+        return redirect('hoods')
+    else:
+        form = HoodForm(instance=instance)
+    return render(request,'all-neighbour/newhood.html',{'form':form,'title':title})
