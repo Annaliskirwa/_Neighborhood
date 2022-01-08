@@ -59,3 +59,13 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+
+# The post model
+class Post(models.Model):
+    title = models.CharField(max_length=120, null=True)
+    post = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_owner')
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, related_name='hood_post')
+    
