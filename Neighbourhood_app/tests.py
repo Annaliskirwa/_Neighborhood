@@ -5,6 +5,24 @@ from django.contrib.auth.models import User
 import datetime as dt
 
 # Create your tests here.
+class ProfileTestClass(TestCase):
+    def setUp(self):
+        self.Annalis = User(user = "Annalis", email = "annaliskirwa@gmail.com",password = "Ann")
+        self.profile = Profile(user= self.Annalis,bio='bio',name='Annalis',profile_pic='mepng', neighbourhood='Pioneer', phone_number='07xxxxxxxx')
+        self.profile.save_profile()
+
+    def tearDown(self):
+        Profile.objects.all().delete()
+        User.objects.all().delete()
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.Annalis, User))
+        self.assertTrue(isinstance(self.profile, Profile))
+
+    def test_edit_bio(self):
+        self.profile.edit_bio('I am a business owner in the hood')
+        self.assertEqual(self.profile.bio, 'I am a business owner in the hood at the far left')
+
 class NeighbourHoodTestClass(TestCase):
     def setUp(self):
         self.Pioneer = NeighbourHood(neighbourhood='Pioneer')
