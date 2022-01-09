@@ -107,7 +107,7 @@
                     <div class="post-hold mb-2">
                         <h6 class="font-weight-bold">{{post.title}}</h6>
                         <p>{{post.post}}</p>
-                       <p class="text-center "><small class="text-muted">--By {{post.owner|title}} on {{post.date}}--</small></p> 
+                       <p class="text-center ">This post is by {{post.owner|title}} on {{post.date}}</p> 
                        {%if post.owner == current_user%}
                       <p class="text-center">
                           <a href="{% url 'update_post' hood.id post.id%}"><i class="fas fa-edit"></i></a>
