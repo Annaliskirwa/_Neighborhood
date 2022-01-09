@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block content%}
+{{block.super}}
+<div class="container mt-3 mb-2">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{message}}
+      </div>
+    {% endfor %}
+    {% endif %}
+    <a href="{% url 'newhood' %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i> Add a new hood</a>
+    {% for hood in hoods %}
+    <div class="hood-cont p-2 card mt-3" >
+        <div class="row">
+            <div class="col-md-4">
+                <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="200" width="320">
+            </div>
+            <div class="col-md-3">
+                <h4 class="card-title">{{hood.name|title}}</h4>
+                <p>{{hood.location}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="card-text">{{hood.description}}</p>
+            </div>
+            <div class="col-md-2 pt-3 pl-5">
+                {% if request.user.profile.neighbourhood == hood %}
+                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">See available hoods</a> 
+                <a href="{% url 'leave_hood' hood.id %}" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black">Leave the hood</a> 
+                {% elif not request.user.profile.neighbourhood %}
+                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Be part of the hood</a> 
+                {% endif %}
+                {%if hood.admin == current_user%}
+                      <p class="ml-4 mt-5">
+                          <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i></a>
+                        </p>
+                {%endif%}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+<!-- <footer class="pt-1 pb-1">
+    <div class="container">
+    <div class="">
+    <div class=" mt-2">
+    <p class="copyright text-center"><small>Annalis Kirwa  &copy; 2022 </small></p>
+    </div>
+    </div>
+    </div>
+
+</footer> -->
+{%endblock%}
