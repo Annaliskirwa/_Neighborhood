@@ -29,14 +29,14 @@
             </div>
             <div class="col-md-2 pt-3 pl-5">
                 {% if request.user.profile.neighbourhood == hood %}
-                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">See available hoods</a> 
-                <a href="{% url 'leave_hood' hood.id %}" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black">Leave the hood</a> 
+                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Other hoods</a> 
+                <a href="{% url 'leave_hood' hood.id %}" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black">Leave hood</a> 
                 {% elif not request.user.profile.neighbourhood %}
-                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Be part of the hood</a> 
+                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Join</a> 
                 {% endif %}
                 {%if hood.admin == current_user%}
                       <p class="ml-4 mt-5">
-                          <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i></a>
+                          <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i>Edit</a>
                         </p>
                 {%endif%}
             </div>

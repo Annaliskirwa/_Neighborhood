@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %} 
+{{ block.super}}
+    <div class="container-fluid">
+        <h2 class="text-center mt-3 orange"><strong>{{user.profile.neighbourhood.name|title}}</strong></h2>
+        <p class = "text-center">My hood</p>
+        <hr>
+        <div class="hood-cont p-2 card mt-3" >
+            <div class="row">
+                <div class = "col-md-1"></div>
+                <div class="col-md-3">
+                    <h4 class="card-title">{{hood.name|title}}</h4>
+                    <p><strong>Location:</strong> {{hood.location}}</p>
+                    <p class="card-text"><strong>About:</strong> {{hood.description}}</p>
+                    <a href="{% url 'leave_hood' hood.id %}" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black">Leave hood</a> 
+                     {%if hood.admin == current_user%}
+                      <p class="ml-4">
+                          <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i></a>
+                        </p>
+                       {%endif%}
+                </div>
+                <div class = "col-md-1"></div>
+                <div class="col-md-5">
+                    <p><span class="font-weight-bold">Hood Administrator:</span>  {{hood.area_administrator}}</p>
+                    <p><span class="font-weight-bold">Health Department:</span>  {{hood.health_tell}}</p>
+                    <p><span class="font-weight-bold">Police Authorities:</span>  {{hood.police_number}}</p>
+                    <p><a href="#members" class="black"><span class="font-weight-bold">Members available in {{hood.name|title}} {{hood.members.count|pluralize}}:</span>  {{hood.members.count}}</a></p>
+                </div>
+
+                <div class="col-md-2">
+                    <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="200" width="320">
+                </div>
+        
+            </div>
+    
+        </div>
+    </div>
+    <hr>
+    <div class="container mt-3">
+        <div class="hood-cont p-2 card mt-3" >
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{message}}
+              </div>
+            {% endfor %}
+            {% endif %}
+            <div class="row">
+                <div class="col-md-5">
+                    <h3 class="text-center mt-3 orange"><strong>{{hood.name|title}} Businesses</strong></h3>
+                    <a href="{% url 'newbusiness' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Business</a>
+                    {% for business in businesses%}
+                    <div class="flex">
+                        <img src="{{business.business_photo.url}}" alt="" height="130" width="150">
+                        <span class="bus-owner">
+                            <h6 class="font-weight-bold">{{business.business_name}}</h6>
+                            <p><span class="font-weight-bold">Owner: </span>  {{business.owner.user.username|title}}</p>
+                            <a href="" class="orange1 text-white p-1 detail-view btn-sm" data-toggle="modal" data-target="#modal-{{business.id}}">View Details</a> <br><br>
+                            {%if business.owner.user == current_user%}
+                            <a href="{% url 'update_business' hood.id business.id%}" ><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'delete_business' hood.id business.id%}" class="ml-4"><i class="fas fa-trash-alt text-danger"></i></a>
+                            {%endif%}
+                    </span>
+                   
+                    </div>
+                    <div class="modal fade" id="modal-{{business.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">{{business.business_name}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="flex">
+                                    <img src="{{business.business_photo.url}}" alt="" height="130" width="150">
+                                    <span class="bus-owner">
+                                        <h6 class="font-weight-bold">{{business.business_name}}</h6>
+                                        <p><span class="font-weight-bold">Owner: </span>  {{business.owner.user.username|title}}</p>
+                                        <p><span class="font-weight-bold">Email: </span>{{business.email}}</p>
+                                        {% if business.phone_number%}
+                                        <p><span class="font-weight-bold">Tel: </span>{{business.phone_number}}</p>
+                                        {%endif%}
+                                    </span>
+                                </div>
+                                <p>{{business.description}}</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <hr class="mb-2">
+                    {%endfor%}
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <h3 class="text-center mt-3 orange"><strong>{{hood.name|title}} Posts</strong></h3>
+                    <a href="{% url 'newpost' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Post</a>
+                    {% for post in posts%}
+                    <div class="post-hold mb-2">
+                        <h6 class="font-weight-bold">{{post.title}}</h6>
+                        <p>{{post.post}}</p>
+                       <p class="text-center "><small class="text-muted">--By {{post.owner|title}} on {{post.date}}--</small></p> 
+                       {%if post.owner == current_user%}
+                      <p class="text-center">
+                          <a href="{% url 'update_post' hood.id post.id%}"><i class="fas fa-edit"></i></a>
+                          <a href="{% url 'delete_post' hood.id post.id%}" class="ml-4"><i class="fas fa-trash-alt text-danger"></i></a>
+                        </p>
+                       {%endif%}
+                    <hr>
+                    </div>
+                    {%endfor%}
+                </div>
+                
+            </div>
+    
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-4 mb-3">
+        <h3 class="text-center mt-3 orange"><strong>{{hood.name|title}} Members</strong></h3>
+        {% for member in members%}
+        {% if member.user.username == current_user.username%}
+        <div class="card p-3">
+            <span>
+                <div class="row">
+                <div class = "col-md-2"></div>
+                <div class="col-md-3">
+                <img class="rounded-circle user" src="{{ member.user.profile.profile_pic.url }}" height="30" width="30">
+                <span class="font-weight-bold ml-2"><a href="{% url 'user_profile' member.user.username  %}" class="black">{{member.user.username|title}}</a></span>
+                </div>
+                <div class="col-md-5">
+                <span class="ml-4 mail"><strong>Email:</strong> {{member.user.email}}</span>
+                </div>
+                </div>
+            </span>
+        
+        </div>
+        {%else%}
+        <div class="mt-2" id="members">
+            <div class="">
+                
+                    <div class="card p-3">
+                        <span>
+                            <div class="row">
+                            <div class="col-md-3">
+                            <img class="rounded-circle user" src="{{ member.user.profile.profile_pic.url }}" height="30" width="30">
+                            <span class="font-weight-bold ml-2"><a href="{% url 'user_profile' member.user.username  %}" class="black">{{member.user.username|title}}</a></span>
+                            </div>
+                            <div class="col-md-5">
+                            <span class="ml-4 mail">Email: {{member.user.email}}</span>
+                            </div>
+                            <div class="col-md-4">
+                            <a href="" class=" btn-sm orange1 text-white p-1 detail-view send-message ">MESSAGE</a>
+                            </div>
+                            </div>
+                        </span>
+                    
+                    </div>
+            </div>
+            
+        </div>
+        {%endif%}
+        {%endfor%}
+    </div>
+    <!-- <footer class="pt-1 pb-1">
+    <div class="container">
+    <div class="">
+    <div class=" mt-2">
+    <p class="copyright text-center"><small>Annalis Kirwa  &copy; 2022 </small></p>
+    </div>
+    </div>
+    </div>
+
+</footer> -->
+{%endblock%}
