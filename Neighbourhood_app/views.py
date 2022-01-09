@@ -7,6 +7,9 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from . forms import UpdateUserForm, UpdateUserProfileForm, UserRegisterForm,HoodForm,BusinessForm,PostForm
 from .models import NeighbourHood,Business,Post,Profile
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import HoodSerializer
 
 
 # Create your views here.
@@ -207,3 +210,11 @@ def search_hood(request):
         hoods = NeighbourHood.objects.filter(name__icontains=name).all()
 
     return render(request, 'neighbours/search.html', {'hoods': hoods,'current_user':current_user})
+
+
+# API View to handle requests
+class HoodList(APIView):
+    def get(self, request, format=None):
+        all_hood = NeighbourHood.objects.all()
+        serializers = HoodSerializer(all_hood, many=True)
+        return Response(serializers.data)
