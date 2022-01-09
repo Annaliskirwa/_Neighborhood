@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="200" width="320">
+                    <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="150" width="150">
                 </div>
         
             </div>
@@ -55,7 +55,7 @@
                     <a href="{% url 'newbusiness' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Business</a> <br><br>
                     {% for business in businesses%}
                     <div class="flex">
-                        <img src="{{business.business_photo.url}}" alt="" height="130" width="150">
+                        <img src="{{business.business_photo.url}}" alt="" height="150" width="150">
                         <span class="bus-owner">
                             <h6 class="font-weight-bold">{{business.business_name}}</h6>
                             <p><span class="font-weight-bold">Owner: </span>  {{business.owner.user.username|title}}</p>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="flex">
-                                    <img src="{{business.business_photo.url}}" alt="" height="130" width="150">
+                                    <img src="{{business.business_photo.url}}" alt="" height="150" width="150">
                                     <span class="bus-owner">
                                         <h6 class="font-weight-bold">{{business.business_name}}</h6>
                                         <p><span class="font-weight-bold">Owner: </span>  {{business.owner.user.username|title}}</p>
