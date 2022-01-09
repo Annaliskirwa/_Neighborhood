@@ -17,5 +17,5 @@ urlpatterns=[
     path('newpost/<id>/', views.new_post, name='newpost'),
     path('update_post/<id>/<post_id>/post/', views.update_post, name='update_post'),
     path('delete_post/<id>/<post_id>/', views.delete_post, name='delete_post'),
-    path('api/hood/', views.HoodList.as_view())
+    path('api/hood/', views.HoodList.as_view(), name='hoodapi')
 ]
