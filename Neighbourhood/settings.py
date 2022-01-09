@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import cloudinary
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,9 +47,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'phone_field',
     'rest_framework',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,6 +94,18 @@ DATABASES = {
     }
 }
 
+# cloudinary.config( 
+#   cloud_name = "dawkiqdwf", 
+#   api_key = "616294889634382", 
+#   api_secret = "EbHqWdPX0QO8Fnywrnjnc5hZCkw" 
+# )
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dawkiqdwf',
+    'API_KEY': '616294889634382',
+    'API_SECRET': 'EbHqWdPX0QO8Fnywrnjnc5hZCkw',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -126,6 +144,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = 'hoods'
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
