@@ -1,0 +1,55 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand neig text-center" href="{% url 'home' %}">Hoods</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        {% if request.user.profile.neighbourhood %}
+        {%else%}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'hoods' %}">Available hoods </a>
+        </li>
+        {%endif%}
+       
+        {% if user.profile.neighbourhood %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'my_hood' user.profile.neighbourhood.id %}">{{user.profile.neighbourhood.name}} </a>
+        </li>
+        {%endif%}
+        {%endif%}
+      </ul>
+      <ul class="nav navbar-nav navbar-right ml-auto mr-5"> 
+
+        {% if user.is_authenticated %}
+        <form class="form-inline mr-3" action="{% url 'search' %}" enctype="multipart/form-data" role="search" aria-label="Search">
+          {% csrf_token %}
+             <input autocomplete="off" id="searching" class="form-control input-sm search" 
+              placeholder="&#xF002; search hood"  style="font-family:Arial, FontAwesome" name="name">
+        </form>
+
+        <li class="nav-item dropdown mr-2">
+            <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="{{user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user profile-img"></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a href="{%url 'profile' user.username%}" class="nav-link text-dark dropdown-item"><i class="fas fa-user"></i> Your Profile</a>
+              <a href="/logout" class="nav-link text-dark dropdown-item">Logout of Hoods <i class="fas fa-sign-out-alt"></i></a>
+              
+            </div>
+          </li>
+        {% else %}
+          <a class="nav-link" href="{% url 'login' %}">Login to Hoods</a>
+          <a class="nav-link" href="{% url 'register' %}">Register to Hoods</a>
+        {%endif%}
+       
+    </ul>
+    </div>
+  </nav>
