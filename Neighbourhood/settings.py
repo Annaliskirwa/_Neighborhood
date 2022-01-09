@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'tinymce',
     'bootstrap4',
     'crispy_forms',
+    'phone_field',
 ]
 
 MIDDLEWARE = [
