@@ -13,7 +13,7 @@ from .models import NeighbourHood,Business,Post,Profile
 
 # The index view
 def index(request):
-    return render(request,'all-neighbour/home.html')
+    return render(request,'neighbours/home.html')
 
 # The user registration view
 def register(request):
@@ -38,7 +38,7 @@ def user_profile(request, username):
     if request.user == user_poster:
         return redirect('profile', username=request.user.username)
       
-    return render(request, 'all-neighbour/member.html', {'user_poster': user_poster, 'current_user':current_user})
+    return render(request, 'neighbours/member.html', {'user_poster': user_poster, 'current_user':current_user})
     
 
 # Hoods view
@@ -46,7 +46,7 @@ def user_profile(request, username):
 def hoods(request):
     current_user=request.user
     hoods = NeighbourHood.objects.all()
-    return render(request,"all-neighbour/hoods.html",{'hoods':hoods,'current_user':current_user})
+    return render(request,"neighbours/hoods.html",{'hoods':hoods,'current_user':current_user})
 
 # Profile view
 @login_required(login_url='login')
@@ -64,7 +64,7 @@ def profile(request, username):
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateUserProfileForm(instance=request.user.profile)
 
-    return render(request, 'all-neighbour/profile.html', {'user_form':user_form,'profile_form':profile_form})
+    return render(request, 'neighbours/profile.html', {'user_form':user_form,'profile_form':profile_form})
 
 # New hood view
 @login_required(login_url='login')
@@ -78,7 +78,7 @@ def new_hood(request):
             return HttpResponseRedirect(reverse("hoods"))
     else:
         form = HoodForm()
-    return render(request, 'all-neighbour/newhood.html', {'form': form})
+    return render(request, 'neighbours/newhood.html', {'form': form})
 
 # A user hood view
 @login_required(login_url='login')
@@ -91,7 +91,7 @@ def user_hood(request,id):
     request.user.profile.neighbourhood = hood
     request.user.profile.save()
     
-    return render(request, 'all-neighbour/user_hood.html', {'hood': hood,'businesses':businesses,'posts':posts,'current_user':current_user, 'members':members})
+    return render(request, 'neighbours/user_hood.html', {'hood': hood,'businesses':businesses,'posts':posts,'current_user':current_user, 'members':members})
 
 
 # Leave hood view
@@ -118,7 +118,7 @@ def new_business(request,id):
             return redirect('my_hood', id)
     else:
         bus_form = BusinessForm()
-    return render(request,'all-neighbour/business.html',{'bus_form':bus_form,'title':title})
+    return render(request,'neighbours/business.html',{'bus_form':bus_form,'title':title})
 
 
 # Add a post view
@@ -136,7 +136,7 @@ def new_post(request,id):
             return redirect('my_hood', id)
     else:
         post_form = PostForm()
-    return render(request,'all-neighbour/post.html',{'post_form':post_form,'title':title})
+    return render(request,'neighbours/post.html',{'post_form':post_form,'title':title})
 
 
 # Update business view
@@ -151,7 +151,7 @@ def update_business(request,id,bus_id):
         return redirect('my_hood', id)
     else:
         bus_form = BusinessForm(instance=instance)
-    return render(request,'all-neighbour/business.html',{'bus_form':bus_form,'title':title})
+    return render(request,'neighbours/business.html',{'bus_form':bus_form,'title':title})
 
 # Update post view
 @login_required(login_url='login')
@@ -165,7 +165,7 @@ def update_post(request,id,post_id):
         return redirect('my_hood', id)
     else:
         post_form = PostForm(instance=instance)
-    return render(request,'all-neighbour/post.html',{'post_form':post_form,'title':title})
+    return render(request,'neighbours/post.html',{'post_form':post_form,'title':title})
 
 # Update hood view
 @login_required(login_url='login')
@@ -180,7 +180,7 @@ def update_hood(request,id):
         return redirect('hoods')
     else:
         form = HoodForm(instance=instance)
-    return render(request,'all-neighbour/newhood.html',{'form':form,'title':title})
+    return render(request,'neighbours/newhood.html',{'form':form,'title':title})
 
 # Delete business view
 @login_required(login_url='login')
@@ -206,4 +206,4 @@ def search_hood(request):
         name = request.GET.get("name")
         hoods = NeighbourHood.objects.filter(name__icontains=name).all()
 
-    return render(request, 'all-neighbour/search.html', {'hoods': hoods,'current_user':current_user})
+    return render(request, 'neighbours/search.html', {'hoods': hoods,'current_user':current_user})
