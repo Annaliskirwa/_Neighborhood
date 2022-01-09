@@ -37,7 +37,7 @@ As a user of Hoods web application, you will be able to:
 * Open the project cloned project
 ####  Activate virtual environment
 Activate virtual environment using python3.8 as default handler
-    `virtualenv -p /usr/bin/python3.6 venv && source venv/bin/activate`
+    `virtualenv -p /usr/bin/python3 venv && source venv/bin/activate`
 ####  Install dependancies
 Install dependancies that will create an environment for the app to run `pip3 install -r requirements.txt`
 ####  Create the Database
