@@ -56,10 +56,12 @@
             <div class="modal-dialog modal-md ">
                 <div class="modal-content">
                     <form action="" method="post" enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
+                        <h1 class="font-weight-bold text-center intro">Hoods</h1>
+                        <h3 class="text-center intro">Update profile</h3>
                         {% csrf_token%}
                         {{ user_form|crispy}}
                         {{ profile_form|crispy}}
-                        <button type="submit" class="btn btn-color login text-white"> Update Profile</button>
+                        <button type="submit" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"> Update your user profile</button>
                     </form>
                 </div>
             </div>
