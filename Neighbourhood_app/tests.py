@@ -44,3 +44,28 @@ class PostTestClass(TestCase):
         self.Vaccinate.delete_vaccinate('Vaccinate')
         rest = Post.objects.all()
         self.assertTrue(len(rest)==0)
+
+class BusinessTestClass(TestCase):
+    def setUp(self):
+        self.Pizza = Business(pizza='Pizza')
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.Pizza))
+
+    def tearDown(self):
+        Post.objects.all().delete()
+
+    def test_save_method(self):
+        self.Pizza.save_pizza()
+        rest = Business.objects.all()
+        self.assertTrue(len(rest)>0)
+
+    def test_delete_method(self):
+        self.Pizza.delete_pizza('Pizza')
+        rest = Business.objects.all()
+        self.assertTrue(len(rest)==0)
+
+    def test_search_method(self):
+        self.Pizza.search_pizza('Pizza')
+        rest = Business.objects.all()
+        self.assertEqual(name__icontains=Business).all()
