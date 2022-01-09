@@ -5,6 +5,7 @@
 {% block content%}
 {{block.super}}
 <div class="container mt-3 mb-2">
+    <h1 class="font-weight-bold text-center intro">Hoods</h1>
     {% if messages %}
     {% for message in messages %}
     <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissable">
@@ -17,30 +18,37 @@
     {% for hood in hoods %}
     <div class="hood-cont p-2 card mt-3" >
         <div class="row">
-            <div class="col-md-4">
-                <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="200" width="320">
-            </div>
+            <div class = "col-md-1"></div>
             <div class="col-md-3">
                 <h4 class="card-title">{{hood.name|title}}</h4>
-                <p>{{hood.location}}</p>
-            </div>
-            <div class="col-md-3">
-                <p class="card-text">{{hood.description}}</p>
-            </div>
-            <div class="col-md-2 pt-3 pl-5">
+                <p><strong>Location:</strong> {{hood.location}}</p>
+                <p class="card-text"><strong>About:</strong> {{hood.description}}</p>
                 {% if request.user.profile.neighbourhood == hood %}
-                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Other hoods</a> 
+                <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">View the hood</a> 
                 <a href="{% url 'leave_hood' hood.id %}" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black">Leave hood</a> 
                 {% elif not request.user.profile.neighbourhood %}
                 <a href="{% url 'my_hood' hood.id %}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black">Join</a> 
                 {% endif %}
-                {%if hood.admin == current_user%}
-                      <p class="ml-4 mt-5">
-                          <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i>Edit</a>
-                        </p>
-                {%endif%}
+                 {%if hood.admin == current_user%}
+                  <p class="ml-4">
+                      <a href="{% url 'update_hood' hood.id %}"><i class="fas fa-edit"></i></a>
+                    </p>
+                   {%endif%}
             </div>
+            <div class = "col-md-1"></div>
+            <div class="col-md-5">
+                <p><span class="font-weight-bold">Hood Administrator:</span>  {{hood.area_administrator}}</p>
+                <p><span class="font-weight-bold">Health Department:</span>  {{hood.health_tell}}</p>
+                <p><span class="font-weight-bold">Police Authorities:</span>  {{hood.police_number}}</p>
+                <p><a href="#members" class="black"><span class="font-weight-bold">Members available in {{hood.name|title}} :</span>  {{hood.members.count}}</a></p>
+            </div>
+
+            <div class="col-md-2">
+                <img class="hood-logo" src="{{hood.hood_logo.url}}" alt=" " height="200" width="320">
+            </div>
+    
         </div>
+
 
     </div>
     {% endfor %}
