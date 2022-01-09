@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Neighbourhood_app',
-    'tinymce'
+    'tinymce',
+    'bootstrap4',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
