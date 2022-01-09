@@ -52,14 +52,14 @@
             <div class="row">
                 <div class="col-md-5">
                     <h3 class="text-center mt-3 orange"><strong>{{hood.name|title}} Businesses</strong></h3>
-                    <a href="{% url 'newbusiness' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Business</a>
+                    <a href="{% url 'newbusiness' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Business</a> <br><br>
                     {% for business in businesses%}
                     <div class="flex">
                         <img src="{{business.business_photo.url}}" alt="" height="130" width="150">
                         <span class="bus-owner">
                             <h6 class="font-weight-bold">{{business.business_name}}</h6>
                             <p><span class="font-weight-bold">Owner: </span>  {{business.owner.user.username|title}}</p>
-                            <a href="" class="orange1 text-white p-1 detail-view btn-sm" data-toggle="modal" data-target="#modal-{{business.id}}">View Details</a> <br><br>
+                            <a href="" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black" data-toggle="modal" data-target="#modal-{{business.id}}">Get more details</a> <br><br>
                             {%if business.owner.user == current_user%}
                             <a href="{% url 'update_business' hood.id business.id%}" ><i class="fas fa-edit"></i></a>
                             <a href="{% url 'delete_business' hood.id business.id%}" class="ml-4"><i class="fas fa-trash-alt text-danger"></i></a>
@@ -71,7 +71,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalCenterTitle">{{business.business_name}}</h5>
+                              <h5 class="modal-title" id="exampleModalCenterTitle"><strong>{{business.business_name}}</strong></h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -91,7 +91,7 @@
                                 <p>{{business.description}}</p>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn mt-4 btn-danger pl-4 pr-4 font-weight-bold black" data-dismiss="modal">Back</button>
                             </div>
                           </div>
                         </div>
@@ -102,7 +102,7 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
                     <h3 class="text-center mt-3 orange"><strong>{{hood.name|title}} Posts</strong></h3>
-                    <a href="{% url 'newpost' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Post</a>
+                    <a href="{% url 'newpost' hood.id%}" class="btn mt-4 btn-secondary pl-4 pr-4 font-weight-bold black"><i class="fas fa-plus"></i>Add Post</a> <br><br>
                     {% for post in posts%}
                     <div class="post-hold mb-2">
                         <h6 class="font-weight-bold">{{post.title}}</h6>
